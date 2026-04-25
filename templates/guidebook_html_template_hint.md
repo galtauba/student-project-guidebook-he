@@ -18,7 +18,6 @@
     }
 
     * { box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -30,10 +29,10 @@
     }
 
     .shell {
-      width: min(1700px, calc(100% - 40px));
+      width: min(1750px, calc(100% - 40px));
       margin: 0 auto;
       display: grid;
-      grid-template-columns: 340px 1fr;
+      grid-template-columns: 360px 1fr;
       gap: 24px;
       padding: 20px 0 40px;
     }
@@ -187,20 +186,37 @@
         <a href="#file-app-py">app.py</a>
         <div class="toc-sub">
           <a href="#unit-app-init-db">אתחול וחיבור למסד</a>
-          <a href="#unit-app-duplicate-username-check">בדיקת שם משתמש קיים</a>
+          <a href="#unit-app-register-field-read">קריאת שדות בטופס הרשמה</a>
           <a href="#unit-app-register-validation">ולידציה של הרשמה</a>
+          <a href="#unit-app-duplicate-username-check">בדיקת שם משתמש קיים</a>
+          <a href="#unit-app-login-password-check">בדיקת סיסמה בהתחברות</a>
           <a href="#unit-app-build-selected-items">בניית selected_items</a>
           <a href="#unit-app-shortage-detection">בדיקת חוסרים במלאי</a>
+          <a href="#unit-app-insert-order">יצירת רשומת הזמנה</a>
+          <a href="#unit-app-insert-order-items">יצירת שורות הזמנה</a>
           <a href="#unit-app-approve-order">אישור הזמנה והפחתת מלאי</a>
+          <a href="#unit-app-approve-return">אישור החזרה והחזרת מלאי</a>
           <a href="#unit-app-reject-return-block">דחיית החזרה ויצירת חסימה</a>
+        </div>
+      </div>
+
+      <div class="toc-file">
+        <a href="#file-templates-base-html">templates/base.html</a>
+        <div class="toc-sub">
+          <a href="#unit-base-head">head וקישור ל-CSS</a>
+          <a href="#unit-base-topbar">ניווט עליון</a>
+          <a href="#unit-base-flash">flash messages</a>
+          <a href="#unit-base-content-block">בלוק התוכן הראשי</a>
+          <a href="#unit-base-footer">footer</a>
         </div>
       </div>
 
       <div class="toc-file">
         <a href="#file-templates-login-html">templates/login.html</a>
         <div class="toc-sub">
-          <a href="#unit-login-form-structure">מבנה הטופס</a>
-          <a href="#unit-login-inputs">שדות הקלט</a>
+          <a href="#unit-login-card-shell">מעטפת הכרטיס</a>
+          <a href="#unit-login-form">טופס ההתחברות</a>
+          <a href="#unit-login-fields">שדות username ו-password</a>
           <a href="#unit-login-submit">כפתור השליחה</a>
         </div>
       </div>
@@ -209,9 +225,11 @@
         <a href="#file-static-style-css">static/style.css</a>
         <div class="toc-sub">
           <a href="#unit-style-root-vars">משתני root</a>
-          <a href="#unit-style-layout">מבנה layout</a>
-          <a href="#unit-style-sidebar">עיצוב sidebar</a>
+          <a href="#unit-style-base-body">עיצוב body ובסיס</a>
+          <a href="#unit-style-layout-shell">מבנה layout</a>
+          <a href="#unit-style-topbar-nav">topbar ו-nav</a>
           <a href="#unit-style-cards-tables">כרטיסים וטבלאות</a>
+          <a href="#unit-style-forms-buttons">טפסים וכפתורים</a>
         </div>
       </div>
     </aside>
@@ -245,32 +263,44 @@
           <h3>יחידה רעיונית: אתחול וחיבור למסד</h3>
           <div class="context-box">
             <strong>הקשר:</strong>
-            לפני שכל route יוכל לקרוא או לעדכן נתונים, האפליקציה חייבת לדעת איך לפתוח חיבור למסד הנתונים ולסגור אותו נכון.
+            לפני שכל route במערכת יוכל לשלוף או לעדכן נתונים, האפליקציה חייבת לדעת איך לפתוח חיבור למסד הנתונים.
           </div>
-          <p><strong>מה היחידה עושה:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
-          <pre class="code-block"><code>def get_db():
-    ...
-</code></pre>
-          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר מפורט לקוד עצמו.</p>
+          <pre class="code-block"><code>BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DATABASE_PATH = os.path.join(BASE_DIR, "instance", "scout_wms.db")
+
+app = Flask(__name__)
+app.config["SECRET_KEY"] = "change-this-secret-key"
+app.config["DATABASE"] = DATABASE_PATH
+
+def get_db():
+    if "db" not in g:
+        os.makedirs(os.path.dirname(app.config["DATABASE"]), exist_ok=True)
+        g.db = sqlite3.connect(app.config["DATABASE"])
+        g.db.row_factory = sqlite3.Row
+        g.db.execute("PRAGMA foreign_keys = ON")
+    return g.db</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
         </article>
 
-        <article class="unit-section" id="unit-app-duplicate-username-check">
-          <h3>יחידה רעיונית: בדיקת שם משתמש קיים</h3>
+        <article class="unit-section" id="unit-app-register-field-read">
+          <h3>יחידה רעיונית: קריאת שדות בטופס הרשמה</h3>
           <div class="context-box">
             <strong>הקשר:</strong>
-            בזמן הרשמה המערכת חייבת לוודא שאין כבר משתמש עם אותו username.
+            כאשר המשתמש שולח טופס הרשמה, צריך קודם למשוך את השדות מתוך request.form.
           </div>
-          <p><strong>מה היחידה עושה:</strong> בודקת אם כבר קיימת רשומת משתמש עם אותו שם משתמש, ואם כן מוסיפה שגיאה.</p>
-          <pre class="code-block"><code>if query_db("SELECT user_id FROM users WHERE username = ?", (username,), one=True):
-    errors.append("שם המשתמש כבר קיים במערכת.")</code></pre>
-          <p><strong>איך זה עובד:</strong> השאילתה מחפשת התאמה בטבלת users. אם התקבלה תוצאה, המשמעות היא שהשם כבר תפוס ולכן ההרשמה לא אמורה להמשיך כרגיל.</p>
+          <pre class="code-block"><code>username = request.form.get("username", "").strip()
+password = request.form.get("password", "").strip()
+full_name = request.form.get("full_name", "").strip()
+role = request.form.get("role", "user")
+team_id = request.form.get("team_id") or None</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
         </article>
 
         <article class="unit-section" id="unit-app-register-validation">
           <h3>יחידה רעיונית: ולידציה של הרשמה</h3>
           <div class="context-box">
             <strong>הקשר:</strong>
-            אחרי קריאת השדות מהטופס, המערכת חייבת לוודא שהנתונים תקינים לפני שמירת משתמש חדש.
+            אחרי קריאת השדות, צריך לוודא שלא חסר מידע חובה ושמשתמש רגיל אכן בחר צוות.
           </div>
           <pre class="code-block"><code>errors = []
 if not username:
@@ -281,7 +311,36 @@ if not full_name:
     errors.append("יש להזין שם מלא.")
 if role == "user" and not team_id:
     errors.append("יש לבחור צוות למשתמש רגיל.")</code></pre>
-          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לולידציה הזאת.</p>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-duplicate-username-check">
+          <h3>יחידה רעיונית: בדיקת שם משתמש קיים</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            לפני יצירת משתמש חדש, המערכת חייבת לוודא שאין כבר משתמש עם אותו username.
+          </div>
+          <pre class="code-block"><code>if query_db("SELECT user_id FROM users WHERE username = ?", (username,), one=True):
+    errors.append("שם המשתמש כבר קיים במערכת.")</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-login-password-check">
+          <h3>יחידה רעיונית: בדיקת סיסמה בהתחברות</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            אחרי שליפת המשתמש לפי username, צריך לבדוק שהסיסמה שהוזנה מתאימה ל-hash השמור.
+          </div>
+          <pre class="code-block"><code>user = query_db("SELECT * FROM users WHERE username = ?", (username,), one=True)
+
+if user is None or not check_password_hash(user["password_hash"], password):
+    flash("שם המשתמש או הסיסמה שגויים.", "danger")
+elif not user["is_approved"]:
+    flash("החשבון עדיין ממתין לאישור מנהל.", "warning")
+else:
+    session.clear()
+    session["user_id"] = user["user_id"]</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
         </article>
 
         <article class="unit-section" id="unit-app-build-selected-items">
@@ -294,10 +353,11 @@ if role == "user" and not team_id:
 for item in items:
     qty = parse_positive_int(request.form.get(f"item_{item['item_id']}", "0"))
     if qty is None:
-        ...
+        flash("יש להזין רק מספרים תקינים.", "danger")
+        return render_template("new_order.html", actions=actions, items=items)
     if qty > 0:
         selected_items.append((item, qty))</code></pre>
-          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לבניית הרשימה.</p>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
         </article>
 
         <article class="unit-section" id="unit-app-shortage-detection">
@@ -311,8 +371,43 @@ for item, qty in selected_items:
     if qty > item["current_qty"]:
         shortages.append(
             f"{item['item_name']} חסר במלאי. ביקשת {qty} ויש רק {item['current_qty']}."
-        )</code></pre>
-          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי על איסוף כל החוסרים ביחד.</p>
+        )
+
+if shortages:
+    return render_template("rejection.html", title="ההזמנה נדחתה", reasons=shortages)</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-insert-order">
+          <h3>יחידה רעיונית: יצירת רשומת הזמנה</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            אחרי שכל הבדיקות עברו, אפשר ליצור את רשומת ההזמנה הראשית בטבלת orders.
+          </div>
+          <pre class="code-block"><code>created_at = datetime.now().strftime("%Y-%m-%d %H:%M")
+cursor = run_db(
+    """
+    INSERT INTO orders (team_id, action_id, created_by_user_id, created_at, status, approved_by, approved_at, rejection_reason)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    """,
+    (g.user["team_id"], action_id, g.user["user_id"], created_at, "pending", None, None, None),
+)
+order_id = cursor.lastrowid</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-insert-order-items">
+          <h3>יחידה רעיונית: יצירת שורות הזמנה</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            אחרי שיש order_id להזמנה הראשית, צריך לשמור את כל הפריטים והכמויות שהוזמנו.
+          </div>
+          <pre class="code-block"><code>for item, qty in selected_items:
+    run_db(
+        "INSERT INTO order_items (order_id, item_id, requested_qty) VALUES (?, ?, ?)",
+        (order_id, item["item_id"], qty),
+    )</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
         </article>
 
         <article class="unit-section" id="unit-app-approve-order">
@@ -321,12 +416,51 @@ for item, qty in selected_items:
             <strong>הקשר:</strong>
             רק אחרי שמנהל מאשר הזמנה בפועל, המערכת מפחיתה מלאי.
           </div>
-          <pre class="code-block"><code>for item in items:
+          <pre class="code-block"><code>shortages = []
+for item in items:
+    if item["requested_qty"] > item["current_qty"]:
+        shortages.append(f"{item['item_name']} לא זמין בכמות המבוקשת.")
+
+if shortages:
+    reason = " ; ".join(shortages)
+    run_db(
+        """
+        UPDATE orders
+        SET status = 'rejected', approved_by = ?, approved_at = ?, rejection_reason = ?
+        WHERE order_id = ?
+        """,
+        (g.user["user_id"], datetime.now().strftime("%Y-%m-%d %H:%M"), reason, order_id),
+    )
+
+for item in items:
     run_db(
         "UPDATE inventory_items SET current_qty = current_qty - ? WHERE item_id = ?",
         (item["requested_qty"], item["item_id"]),
     )</code></pre>
-          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי על המשמעות העסקית של ההפחתה.</p>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-approve-return">
+          <h3>יחידה רעיונית: אישור החזרה והחזרת מלאי</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            כאשר המנהל בודק החזרה תקינה, המערכת צריכה להחזיר את הכמויות למלאי ולעדכן את סטטוס ההחזרה.
+          </div>
+          <pre class="code-block"><code>original_by_item = {row["item_id"]: row["requested_qty"] for row in original_items}
+missing_items = []
+
+for row in returned_items:
+    requested_qty = original_by_item.get(row["item_id"], 0)
+    returned_qty = row["returned_qty"]
+    if returned_qty < requested_qty:
+        missing_items.append((row["item_name"], requested_qty - returned_qty))
+
+if missing_items:
+    flash("נמצא חוסר בהחזרה. יש לדחות את ההחזרה ולבחור פעולה לחסימה.", "warning")
+    return redirect(url_for("admin_returns"))
+
+add_returned_items_back_to_inventory(return_id)</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
         </article>
 
         <article class="unit-section" id="unit-app-reject-return-block">
@@ -345,35 +479,94 @@ for item, qty in selected_items:
         created_at = excluded.created_at,
         reason = excluded.reason
     """,
-    (...),
+    (
+        order_data["team_id"],
+        blocked_action_id,
+        return_id,
+        g.user["user_id"],
+        datetime.now().strftime("%Y-%m-%d %H:%M"),
+        reason,
+    ),
 )</code></pre>
-          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי על יצירת או עדכון חסימה לצוות.</p>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
+        </article>
+      </section>
+
+      <section class="section" id="file-templates-base-html">
+        <h2>קובץ: templates/base.html</h2>
+        <p>כאן יבוא הסבר על תפקיד תבנית האב.</p>
+
+        <article class="unit-section" id="unit-base-head">
+          <h3>יחידה רעיונית: head וקישור ל-CSS</h3>
+          <pre class="code-block"><code>&lt;head&gt;
+    &lt;meta charset="utf-8"&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+    &lt;title&gt;{% block title %}מערכת מחסן{% endblock %}&lt;/title&gt;
+    &lt;link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"&gt;
+&lt;/head&gt;</code></pre>
+          <p>כאן יבוא הסבר.</p>
+        </article>
+
+        <article class="unit-section" id="unit-base-topbar">
+          <h3>יחידה רעיונית: ניווט עליון</h3>
+          <pre class="code-block"><code>&lt;header class="topbar"&gt;
+    ...
+&lt;/header&gt;</code></pre>
+          <p>כאן יבוא הסבר.</p>
+        </article>
+
+        <article class="unit-section" id="unit-base-flash">
+          <h3>יחידה רעיונית: flash messages</h3>
+          <pre class="code-block"><code>{% with messages = get_flashed_messages(with_categories=true) %}
+    ...
+{% endwith %}</code></pre>
+          <p>כאן יבוא הסבר.</p>
+        </article>
+
+        <article class="unit-section" id="unit-base-content-block">
+          <h3>יחידה רעיונית: בלוק התוכן הראשי</h3>
+          <pre class="code-block"><code>{% block content %}{% endblock %}</code></pre>
+          <p>כאן יבוא הסבר.</p>
+        </article>
+
+        <article class="unit-section" id="unit-base-footer">
+          <h3>יחידה רעיונית: footer</h3>
+          <pre class="code-block"><code>&lt;footer class="footer"&gt;פרויקט Flask לימודי ברמת תיכון&lt;/footer&gt;</code></pre>
+          <p>כאן יבוא הסבר.</p>
         </article>
       </section>
 
       <section class="section" id="file-templates-login-html">
         <h2>קובץ: templates/login.html</h2>
-        <p>כאן יבוא הסבר על תפקיד המסך.</p>
+        <p>כאן יבוא הסבר על תפקיד מסך ההתחברות.</p>
 
-        <article class="unit-section" id="unit-login-form-structure">
-          <h3>יחידה רעיונית: מבנה הטופס</h3>
-          <pre class="code-block"><code>&lt;form method="post"&gt;
-  ...
-&lt;/form&gt;</code></pre>
-          <p>כאן יבוא הסבר על מבנה הטופס.</p>
+        <article class="unit-section" id="unit-login-card-shell">
+          <h3>יחידה רעיונית: מעטפת הכרטיס</h3>
+          <pre class="code-block"><code>&lt;div class="card" style="max-width: 520px; margin: 0 auto;"&gt;
+    ...
+&lt;/div&gt;</code></pre>
+          <p>כאן יבוא הסבר.</p>
         </article>
 
-        <article class="unit-section" id="unit-login-inputs">
-          <h3>יחידה רעיונית: שדות הקלט</h3>
-          <pre class="code-block"><code>&lt;input name="username"&gt;
-&lt;input name="password" type="password"&gt;</code></pre>
-          <p>כאן יבוא הסבר על השדות.</p>
+        <article class="unit-section" id="unit-login-form">
+          <h3>יחידה רעיונית: טופס ההתחברות</h3>
+          <pre class="code-block"><code>&lt;form method="post"&gt;
+    ...
+&lt;/form&gt;</code></pre>
+          <p>כאן יבוא הסבר.</p>
+        </article>
+
+        <article class="unit-section" id="unit-login-fields">
+          <h3>יחידה רעיונית: שדות username ו-password</h3>
+          <pre class="code-block"><code>&lt;label&gt;שם משתמש&lt;input type="text" name="username" required&gt;&lt;/label&gt;
+&lt;label&gt;סיסמה&lt;input type="password" name="password" required&gt;&lt;/label&gt;</code></pre>
+          <p>כאן יבוא הסבר.</p>
         </article>
 
         <article class="unit-section" id="unit-login-submit">
           <h3>יחידה רעיונית: כפתור השליחה</h3>
-          <pre class="code-block"><code>&lt;button type="submit"&gt;התחבר&lt;/button&gt;</code></pre>
-          <p>כאן יבוא הסבר על פעולת השליחה.</p>
+          <pre class="code-block"><code>&lt;button type="submit"&gt;להתחבר&lt;/button&gt;</code></pre>
+          <p>כאן יבוא הסבר.</p>
         </article>
       </section>
 
@@ -385,34 +578,57 @@ for item, qty in selected_items:
           <h3>יחידה רעיונית: משתני root</h3>
           <pre class="code-block"><code>:root {
   --bg: ...;
-  --panel: ...;
+  --surface: ...;
+  --text: ...;
 }</code></pre>
-          <p>כאן יבוא הסבר על משתני הצבעים והעיצוב.</p>
+          <p>כאן יבוא הסבר.</p>
         </article>
 
-        <article class="unit-section" id="unit-style-layout">
+        <article class="unit-section" id="unit-style-base-body">
+          <h3>יחידה רעיונית: עיצוב body ובסיס</h3>
+          <pre class="code-block"><code>body {
+  margin: 0;
+  font-family: ...;
+  direction: rtl;
+  background: ...;
+  color: ...;
+}</code></pre>
+          <p>כאן יבוא הסבר.</p>
+        </article>
+
+        <article class="unit-section" id="unit-style-layout-shell">
           <h3>יחידה רעיונית: מבנה layout</h3>
-          <pre class="code-block"><code>.wrap {
-  display: grid;
-  grid-template-columns: ...;
-}</code></pre>
-          <p>כאן יבוא הסבר על מבנה העמוד.</p>
+          <pre class="code-block"><code>.container { ... }
+.page { ... }
+.two-columns { ... }</code></pre>
+          <p>כאן יבוא הסבר.</p>
         </article>
 
-        <article class="unit-section" id="unit-style-sidebar">
-          <h3>יחידה רעיונית: עיצוב sidebar</h3>
-          <pre class="code-block"><code>.side {
-  position: sticky;
-  ...
-}</code></pre>
-          <p>כאן יבוא הסבר על הניווט הצדדי.</p>
+        <article class="unit-section" id="unit-style-topbar-nav">
+          <h3>יחידה רעיונית: topbar ו-nav</h3>
+          <pre class="code-block"><code>.topbar { ... }
+.topbar-inner { ... }
+.nav { ... }
+.nav a { ... }</code></pre>
+          <p>כאן יבוא הסבר.</p>
         </article>
 
         <article class="unit-section" id="unit-style-cards-tables">
           <h3>יחידה רעיונית: כרטיסים וטבלאות</h3>
           <pre class="code-block"><code>.card { ... }
-table { ... }</code></pre>
-          <p>כאן יבוא הסבר על כרטיסים, טבלאות ורכיבי תוכן.</p>
+.stat { ... }
+table { ... }
+th, td { ... }</code></pre>
+          <p>כאן יבוא הסבר.</p>
+        </article>
+
+        <article class="unit-section" id="unit-style-forms-buttons">
+          <h3>יחידה רעיונית: טפסים וכפתורים</h3>
+          <pre class="code-block"><code>form { ... }
+input, select, textarea, button { ... }
+.button { ... }
+.button-danger { ... }</code></pre>
+          <p>כאן יבוא הסבר.</p>
         </article>
       </section>
 

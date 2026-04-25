@@ -90,6 +90,22 @@ This is especially important in large files such as:
 
 ---
 
+# No Truncated Code in Units
+
+Every logical unit must show complete real code for that unit.
+
+Do NOT use:
+- `...`
+- abbreviated route bodies
+- shortened placeholder examples
+- partial unit code that hides the meaningful lines
+
+If the code is too large, split the unit again into smaller units.
+
+Never solve length problems by hiding code.
+
+---
+
 # Code-Specific Explanation Rule
 
 Explanations must be specific to the actual code shown.
@@ -201,14 +217,19 @@ For templates and UI-related files, explain:
 
 Break important templates into logical units too, such as:
 - page shell
-- navigation
+- head and stylesheet inclusion
+- top navigation
 - flash messages
 - main form
+- submit button area
 - result table
-- action buttons
-- conditional sections
+- conditional warning area
+- repeated row block
+- footer area
 
 Do not reduce templates to one-line summaries.
+
+Important templates must not stop at one generic unit if the file has multiple clear parts.
 
 ---
 
@@ -224,13 +245,16 @@ For CSS files, explain:
 
 Break CSS into logical units too, such as:
 - root variables
-- layout containers
+- base/body styles
+- layout shell
 - navigation/sidebar styles
 - cards/tables/forms
 - code blocks
 - desktop layout rules
 
 Do not reduce CSS to one short paragraph.
+
+Large CSS files must have several logical units.
 
 ---
 
@@ -243,6 +267,9 @@ Do not produce repetitive generic explanations like:
 - "this file is used for configuration"
 
 Instead explain the real meaning of the file in this project.
+
+For short files, 1 useful unit may be enough.
+For longer files such as README, split into meaningful sections when possible.
 
 ---
 
@@ -279,13 +306,15 @@ Examples:
   - unit: reject return and create block
 
 - file: templates/login.html
-  - unit: form structure
+  - unit: page shell
+  - unit: login form
   - unit: username input
   - unit: password input
   - unit: submit button
 
 - file: static/style.css
   - unit: root variables
+  - unit: body/base styling
   - unit: layout shell
   - unit: sidebar styling
   - unit: card/table styling

@@ -46,9 +46,10 @@ Internally perform these stages:
 3. detect important flows
 4. detect important files
 5. detect logical code units inside files
-6. plan the teaching structure
-7. generate the final HTML
-8. generate oral exam questions inside the HTML
+6. split oversized logical units into smaller teaching units
+7. plan the teaching structure
+8. generate the final HTML
+9. generate oral exam questions inside the HTML
 
 Do NOT output these internal stages as separate files.
 
@@ -94,6 +95,21 @@ Do not omit source files unless they are clearly generated artifacts, binaries, 
 
 ---
 
+# No Truncated Code Rule (CRITICAL)
+
+Inside the conceptual walkthrough sections, do NOT use:
+- `...`
+- shortened placeholder snippets
+- partial code that hides the main logic
+- summarized pseudocode instead of the real project code
+
+Every logical unit must show the real code of that unit in a complete and honest way.
+
+If a logical unit is too large, split it into smaller logical units.
+Do not hide part of the code.
+
+---
+
 # Logical Explanation Rule (CRITICAL)
 
 Do NOT explain code by blind line-by-line narration.
@@ -109,7 +125,6 @@ Examples of logical code units:
 - opening a database connection
 - building a selected items list
 - checking shortages
-- updating approval status
 - rendering a template
 - handling permission checks
 - returning items to inventory
@@ -117,6 +132,57 @@ Examples of logical code units:
 Each logical block must be explained as a complete unit.
 
 Only zoom into specific lines when the internal logic is important enough to require it.
+
+---
+
+# Granularity Rule (CRITICAL)
+
+Do not keep very large units if they contain multiple distinct ideas.
+
+If a section contains several meaningful sub-flows, split it into smaller logical units.
+
+Examples:
+
+Instead of one large unit like:
+- "user screens"
+
+split into smaller units such as:
+- dashboard data preparation
+- blocked action lookup
+- building selected_items
+- checking shortages
+- creating the order record
+- saving order items
+- validating a return
+- calculating missing items
+
+Instead of one large unit like:
+- "admin screens"
+
+split into smaller units such as:
+- listing pending orders
+- approving an order
+- rejecting an order
+- approving a return
+- rejecting a return and creating a block
+- adding inventory items
+- updating inventory items
+- adding teams
+- deleting teams
+
+Instead of one large unit like:
+- "template structure"
+
+split into smaller units such as:
+- page shell
+- top navigation
+- flash messages
+- main form
+- submit action
+- table display
+- conditional warning area
+
+A logical unit should represent one coherent teaching idea.
 
 ---
 
@@ -136,42 +202,6 @@ Every block explanation must directly reference:
 - the exact business meaning of the code
 
 The explanation must feel specific to the code, not templated.
-
----
-
-# Granularity Rule (CRITICAL)
-
-Do not keep very large units if they contain multiple distinct ideas.
-
-If a section contains several meaningful sub-flows, split it into smaller logical units.
-
-Examples:
-Instead of one large unit like:
-- "user screens"
-
-split into smaller units such as:
-- dashboard data preparation
-- building selected_items
-- checking shortages
-- creating the order record
-- saving order items
-- validating a return
-- calculating missing items
-
-Instead of one large unit like:
-- "admin screens"
-
-split into smaller units such as:
-- approving an order
-- rejecting an order
-- approving a return
-- rejecting a return and creating a block
-- adding inventory items
-- updating inventory items
-- adding teams
-- deleting teams
-
-A logical unit should represent one coherent teaching idea.
 
 ---
 
@@ -221,6 +251,25 @@ For every important file:
 Do not keep all explanation in one place and all code in another place.
 
 Explanation and code must stay close together.
+
+---
+
+# Minimum Unit Depth Rule (CRITICAL)
+
+Do not leave important files with only one generic subsection.
+
+For important files, create multiple logical units whenever the file contains multiple ideas.
+
+Guideline:
+- simple files: at least 1–2 logical units
+- medium templates/forms: at least 2–4 logical units
+- large backend/controller files: at least 5–12 logical units, or more if needed
+
+This rule applies especially to:
+- app/controller/server files
+- shared templates such as base.html
+- complex form templates
+- large CSS files
 
 ---
 
