@@ -637,3 +637,145 @@ Questions should be distributed across:
 Do not allow the questions section to shrink into only a few examples.
 
 The purpose is oral exam preparation, not quiz mode.
+
+---
+
+# Terminology / Glossary Section (CRITICAL)
+
+The generated HTML MUST include a dedicated section:
+
+Section ID: #terminology
+Section Title: מונחים חשובים לפרויקט
+
+This section is MANDATORY.
+
+---
+
+## Purpose
+
+This section prepares the student for:
+- oral exam questions
+- deep understanding of the system
+- ability to explain concepts, not just code
+
+It must feel like:
+- a vocabulary lesson the student must truly understand
+- a guided bridge between code and professional language
+- a section that helps the student speak confidently about the project
+
+---
+
+## Structure (STRICT)
+
+The section MUST be divided into 3 levels:
+
+### 1. Basic Terms (מונחים בסיסיים)
+### 2. Intermediate Terms (מונחים בינוניים)
+### 3. Advanced Terms (מונחים מתקדמים)
+
+Each level must contain 8–15 terms.
+
+Total terms: 25–40 minimum.
+
+---
+
+## Term Structure (STRICT)
+
+Each term MUST be written as a mini learning unit:
+
+- term title
+- definition (simple and clear)
+- why it exists in THIS project
+- where it appears in the code conceptually
+- example from the project if applicable
+- common mistake students make about this term
+
+---
+
+## Teaching Style Rules
+
+- MUST be written in Hebrew
+- MUST use teaching tone, not dictionary tone
+- MUST connect directly to the project
+- MUST NOT be generic definitions without project context
+
+---
+
+## Forbidden
+
+- no generic Wikipedia-style definitions
+- no copy-paste explanations
+- no line references like app.py:123
+- no shallow explanations
+
+---
+
+## Example Term Families (GUIDANCE ONLY)
+
+Basic terms may include things like:
+- Flask
+- route
+- template
+- form
+- POST
+- session
+- database
+- inventory item
+
+Intermediate terms may include things like:
+- decorator
+- foreign key
+- query
+- password hashing
+- business logic
+- validation
+- approval flow
+- flash message
+
+Advanced terms may include things like:
+- data consistency
+- transaction
+- authentication vs authorization
+- separation of concerns
+- state transition
+- end-to-end flow
+- business rule enforcement
+- system integrity
+
+---
+
+## Placement Rule
+
+This section MUST appear:
+
+AFTER:
+- #flows
+
+BEFORE:
+- file walkthrough / code walkthrough
+
+---
+
+## Flow Connection Rule
+
+Each term SHOULD connect to at least one real flow in the system when relevant.
+
+That means the term list should help the student talk about:
+- registration
+- login
+- dashboard behavior
+- order creation
+- approval and rejection
+- return flow
+- reports
+- admin management flows
+
+---
+
+## Final Goal
+
+After reading this section, the student should be able to:
+- explain the system without looking at code
+- use correct technical terms
+- sound confident in an oral exam
+- connect professional language to actual implementation in the project

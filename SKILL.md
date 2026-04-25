@@ -685,6 +685,46 @@ Focus on what the student should explain in their own words.
 
 ---
 
+# Terminology / Glossary Rule (CRITICAL)
+
+The final HTML must include a dedicated terminology section that teaches the professional vocabulary of the specific project.
+
+This section is not optional.
+It must help the student explain the project using correct technical language, not only describe code blocks.
+
+The terminology section must:
+- be directly connected to the actual project
+- move from the most basic concepts to more advanced ones
+- help the student prepare for oral exam language
+- feel like a guided vocabulary lesson, not a dictionary dump
+
+The section must include three levels:
+- basic terms
+- intermediate terms
+- advanced terms
+
+Each level must contain 8–15 terms.
+Total terms: 25–40 minimum.
+
+Each term must be written as a mini teaching unit that includes:
+- the term itself
+- a simple and clear definition
+- why this term exists in this exact project
+- where it appears conceptually in the project
+- an example from the project when relevant
+- a common mistake students make about this term
+
+The explanations must:
+- be written in Hebrew
+- be pedagogical
+- avoid generic Wikipedia-style definitions
+- avoid line references
+- avoid shallow, context-free explanations
+
+Each term should connect to at least one real flow in the system when relevant.
+
+---
+
 # HTML Must Include
 
 The final HTML must include, in a clear structure:
@@ -693,10 +733,11 @@ The final HTML must include, in a clear structure:
 2. architecture
 3. data model if relevant
 4. major flows
-5. file-by-file walkthrough
-6. logical code-unit walkthrough with embedded code
-7. oral exam preparation questions
-8. final summary
+5. terminology / glossary section (basic → intermediate → advanced terms)
+6. file-by-file walkthrough
+7. logical code-unit walkthrough with embedded code
+8. oral exam preparation questions
+9. final summary
 
 The file walkthrough and logical code-unit walkthrough must function as one integrated teaching experience, not two separate duplicated sections.
 

@@ -154,6 +154,22 @@
       margin: 12px 0;
     }
 
+    .term-level {
+      margin-top: 18px;
+      padding: 18px;
+      background: #fffaf1;
+      border: 1px solid #eadfcd;
+      border-radius: 20px;
+    }
+
+    .term-card {
+      margin-top: 16px;
+      padding: 16px;
+      background: #ffffff;
+      border: 1px solid #eadfcd;
+      border-radius: 16px;
+    }
+
     .code-block {
       background: #111827;
       color: #f9fafb;
@@ -195,6 +211,10 @@
        - The guide must feel like a private tutor explanation, not like technical documentation with line references.
        - Avoid headings or labels such as "source: app.py:1-44".
        - Questions section must contain 30–50 open-ended oral-exam questions with "what the student should explain".
+       - The HTML must include a mandatory terminology section with id="terminology".
+       - The terminology section must appear after #flows and before the file/code walkthrough.
+       - The terminology section must be split into three levels: basic, intermediate, advanced.
+       - Each terminology level must contain multiple term cards that teach vocabulary in direct connection to this exact project.
     */
   </style>
 </head>
@@ -207,6 +227,7 @@
         <a href="#overview">סקירה כללית</a>
         <a href="#architecture">ארכיטקטורה</a>
         <a href="#flows">זרימות מערכת</a>
+        <a href="#terminology">מונחים חשובים לפרויקט</a>
         <a href="#files-overview">מבנה הקבצים</a>
         <a href="#questions">שאלות לבחינה</a>
         <a href="#summary">סיכום</a>
@@ -281,6 +302,36 @@
         <h2>זרימות מערכת</h2>
         <p>כאן יבואו הזרימות המרכזיות.</p>
         <p class="small">יש להציג את הזרימות בסדר שמלמד את התלמיד איך הנתונים והתפקידים במערכת מתחברים זה לזה.</p>
+      </section>
+
+      <section class="section" id="terminology">
+        <h2>מונחים חשובים לפרויקט</h2>
+        <p>כאן יבוא חלק ייעודי של מונחים שהתלמיד חייב להכיר כדי להסביר את הפרויקט בעל פה, מהבסיסיים ביותר ועד המורכבים יותר.</p>
+        <p class="small">החלק הזה חייב להיות מחובר ישירות לפרויקט עצמו. לא הגדרות כלליות באוויר, אלא שפה מקצועית שמופיעה בזרימות, בקבצים ובקוד של המערכת.</p>
+
+        <section class="term-level" id="terminology-basic">
+          <h3>מונחים בסיסיים</h3>
+          <p class="small">בחלק הזה יבואו 8–15 מונחים בסיסיים, כמו Flask, route, template, form, POST, session, database, inventory item, עם הסבר פשוט וברור שמחובר ישירות לפרויקט.</p>
+
+          <article class="term-card" id="term-basic-example">
+            <h4>מונח לדוגמה</h4>
+            <p><strong>הגדרה:</strong> כאן תבוא הגדרה פשוטה וברורה.</p>
+            <p><strong>למה הוא קיים בפרויקט הזה:</strong> כאן יוסבר למה המושג הזה חשוב דווקא במערכת הנוכחית.</p>
+            <p><strong>איפה הוא מופיע בפרויקט:</strong> כאן יוסבר איפה רואים אותו מבחינה רעיונית בקוד או בזרימה, בלי מספרי שורות.</p>
+            <p><strong>דוגמה מהפרויקט:</strong> כאן תבוא דוגמה אמיתית מהמערכת, אם רלוונטי.</p>
+            <p><strong>טעות נפוצה של תלמידים:</strong> כאן תבוא טעות או בלבול נפוץ.</p>
+          </article>
+        </section>
+
+        <section class="term-level" id="terminology-intermediate">
+          <h3>מונחים בינוניים</h3>
+          <p class="small">בחלק הזה יבואו 8–15 מונחים ברמת ביניים, כמו decorator, foreign key, query, password hashing, validation, business logic, approval flow, flash message.</p>
+        </section>
+
+        <section class="term-level" id="terminology-advanced">
+          <h3>מונחים מתקדמים</h3>
+          <p class="small">בחלק הזה יבואו 8–15 מונחים מתקדמים, כמו data consistency, transaction, authentication vs authorization, separation of concerns, state transition, system integrity.</p>
+        </section>
       </section>
 
       <section class="section" id="files-overview">
@@ -975,7 +1026,7 @@ input, select, textarea, button { ... }
       <section class="section" id="summary">
         <h2>סיכום</h2>
         <p>כאן יבוא סיכום לימודי של הפרויקט.</p>
-        <p class="small">הסיכום צריך לאחד את ההבנה של הזרימות, הקבצים והיחידות הלוגיות, בלי לחזור על הקוד שוב בבלוקי full-source.</p>
+        <p class="small">הסיכום צריך לאחד את ההבנה של הזרימות, הקבצים, המונחים והיחידות הלוגיות, בלי לחזור על הקוד שוב בבלוקי full-source.</p>
       </section>
     </main>
   </div>
