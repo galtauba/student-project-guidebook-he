@@ -6,19 +6,19 @@ Examples:
 - user interaction
 - API request
 - CLI command
-- data pipeline
+- data processing
 - game loop
 
 ---
 
-For each flow identify:
+For each flow:
 
 1. entry point
 2. steps
-3. functions involved
+3. logic blocks involved
 4. data movement
 5. output
 
 ---
 
-Explain flows in human-readable way.
+Explain flows clearly in human terms.

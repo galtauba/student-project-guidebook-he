@@ -30,13 +30,6 @@ Detect automatically:
 
 ---
 
-## Technologies
-- language
-- framework
-- DB
-
----
-
 ## Identify:
 - entry points
 - core logic
@@ -44,14 +37,13 @@ Detect automatically:
 
 ---
 
-## Split Code Into Logical Segments
+## Detect Logical Units
 
-- imports
-- config
-- init
-- input handling
-- validation
-- logic
-- data access
-- output
-- error handling
+Find meaningful blocks such as:
+
+- validation blocks
+- database queries
+- authentication checks
+- state updates
+- business logic operations
+- rendering blocks

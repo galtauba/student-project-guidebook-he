@@ -1,25 +1,18 @@
 # Oral Exam Questions
 
-Generate 30–50 open-ended questions.
+Generate 30–50 questions.
 
 ---
 
-# ❌ Do NOT:
+# RULES
 
-- multiple choice
-- answers
-
----
-
-# ✅ MUST:
-
-- deep understanding
-- reasoning
-- explanation
+- no multiple choice
+- no answers
+- open-ended only
 
 ---
 
-# Categories:
+# Categories
 
 - Flow
 - Code
@@ -29,7 +22,7 @@ Generate 30–50 open-ended questions.
 
 ---
 
-# Format:
+# Format
 
 ### שאלה X — [קטגוריה]
 
@@ -43,13 +36,13 @@ Generate 30–50 open-ended questions.
 
 ---
 
-# Include:
+# Include
 
 - follow-up questions
 - deeper probing
 
 ---
 
-# Goal:
+# Goal
 
-Simulate real teacher asking questions.
+Simulate real teacher interview.

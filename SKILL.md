@@ -1,6 +1,6 @@
 ---
 name: student-project-guidebook-he
-description: Generate a single complete Hebrew HTML guidebook for any software project, including full source code and line-by-line explanations for teaching and oral exam preparation.
+description: Generate a single complete Hebrew HTML guidebook for any software project, including full source code and deep logical explanations for teaching and oral exam preparation.
 ---
 
 # 🎯 Core Goal
@@ -10,7 +10,7 @@ Transform ANY software project into ONE complete HTML guidebook.
 The HTML must include:
 - full explanation
 - full source code
-- line-by-line teaching
+- logical code walkthrough
 - architecture
 - flows
 - oral exam questions
@@ -24,8 +24,8 @@ Internally perform:
 1. project analysis
 2. architecture detection
 3. flow detection
-4. explanation planning
-5. full HTML generation
+4. logical explanation planning
+5. HTML generation
 6. question generation
 
 DO NOT output intermediate files.
@@ -34,62 +34,51 @@ DO NOT output intermediate files.
 
 # ❗ Final Output Rule (CRITICAL)
 
-You must output ONLY ONE file:
+Output ONLY:
 
 - student_guidebook.html
 
-Do NOT generate:
-- markdown files
-- analysis files
-- separate question files
-
-Everything must be inside the HTML.
+Do NOT generate markdown or additional files.
 
 ---
 
 # 🧠 Universal Adaptation Rule
 
-Detect project type dynamically:
-
-- Web
-- CLI
-- API
-- Game
-- Library
-- Script
-
-Adapt explanation accordingly.
+Detect project type dynamically and adapt explanation.
 
 ---
 
 # 🔥 FULL CODE RULE (CRITICAL)
 
-The HTML must contain:
+The HTML must include:
 
 - ALL project files
-- ALL code
-- NO summaries instead of code
-- NO missing files
+- ALL source code
+- no summaries instead of code
 
 ---
 
-# 🔬 LINE-BY-LINE RULE (CRITICAL)
+# 🧩 LOGICAL EXPLANATION RULE (CRITICAL)
 
-Explain code like a private teacher:
+Do NOT explain code line-by-line blindly.
 
-- explain every important line
-- break code into very small segments
-- explain meaning of each line
-- explain why it exists
-- explain effect on system
+Instead:
+
+- detect logical code units
+- group related lines into meaningful blocks
+- explain each block completely
+
+Only drill down to line-level when necessary.
 
 ---
 
-# 🔗 FLOW RULE
+# 🔗 CONTEXT RULE
 
-Explain execution flow:
+Always explain:
 
-input → processing → logic → data → output
+- what happens before the block
+- what the block does
+- what happens after
 
 ---
 
@@ -99,6 +88,6 @@ input → processing → logic → data → output
 2. Architecture
 3. Flows
 4. Full code walkthrough (ALL files)
-5. Line-by-line explanations
+5. Logical block explanations
 6. Interview questions
 7. Summary

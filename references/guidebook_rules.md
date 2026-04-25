@@ -4,11 +4,9 @@ Write in Hebrew.
 
 ---
 
-# 🎯 Teaching Mode (CRITICAL)
+# 🎯 Teaching Mode
 
 The guide must feel like a private lesson.
-
-Explain code progressively and clearly.
 
 ---
 
@@ -16,7 +14,61 @@ Explain code progressively and clearly.
 
 Include ALL project files with full code.
 
-DO NOT omit any file.
+---
+
+# 🧩 LOGICAL BLOCK EXPLANATION (CRITICAL)
+
+Do NOT explain code mechanically line-by-line.
+
+Instead:
+
+Detect meaningful logical blocks.
+
+Examples of logical blocks:
+- checking if user exists in DB
+- validating form input
+- building a list of items
+- checking permissions
+- updating database records
+- rendering output
+
+Each block must be explained as ONE complete idea.
+
+---
+
+# 🔬 When to Explain Line-by-Line
+
+Only when necessary:
+
+- conditions
+- loops
+- important decisions
+- security checks
+- database updates
+
+---
+
+# 🧠 BLOCK EXPLANATION TEMPLATE
+
+For each logical block explain:
+
+- מה הבלוק עושה
+- למה הוא קיים
+- איך הוא עובד (שלבים פנימיים)
+- מה הקלט
+- מה הפלט
+- מה יקרה אם ייכשל
+- איך הוא מתחבר לקוד מסביב
+
+---
+
+# 🔗 CONTEXT RULE
+
+Always explain:
+
+- מה קרה לפני
+- מה קורה עכשיו
+- מה יקרה אחרי
 
 ---
 
@@ -26,62 +78,20 @@ Include:
 
 - file name
 - purpose
-- explanation
-- FULL code
-- line-by-line explanation
+- full code
+- logical block breakdown
+- deep explanation
 
 ---
 
-# 🔬 Line-by-Line Explanation
-
-For code:
-
-- break into small segments (1–5 lines)
-- for critical logic → explain each line separately
-
----
-
-# Explanation for each segment must include:
-
-- what it does
-- why it exists
-- what happens if removed
-- how it connects forward
-
----
-
-# 🧠 Important Logic
-
-Always deeply explain:
-
-- conditions
-- loops
-- validations
-- DB operations
-- state changes
-- API calls
-
----
-
-# 🔗 Flow Explanation
-
-Explain how code connects across:
-
-- functions
-- files
-- modules
-
----
-
-# 🎨 Templates (HTML files)
+# 🎨 Templates
 
 Explain:
 
 - UI structure
 - data variables
 - forms
-- user actions
-- connected routes
+- interactions
 
 ---
 
@@ -89,4 +99,4 @@ Explain:
 
 - NEVER show code without explanation
 - NEVER explain without showing code
-- NEVER skip lines of important logic
+- NEVER break a logical idea into meaningless fragments
