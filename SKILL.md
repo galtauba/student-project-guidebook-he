@@ -1,6 +1,6 @@
 ---
 name: student-project-guidebook-he
-description: Generate one complete Hebrew HTML guidebook for any software project, including full source code, logical code explanations, desktop-only structured navigation, and oral exam preparation questions.
+description: Generate one complete Hebrew HTML guidebook for any software project, including full source code, deep logical code explanations, desktop-only hierarchical navigation, and oral exam preparation questions.
 ---
 
 # Core Goal
@@ -15,7 +15,7 @@ The final HTML must include:
 - explanation of the code by meaningful logical units
 - embedded code snippets inside each conceptual explanation
 - file-by-file walkthrough
-- interview preparation questions
+- oral exam preparation questions
 - desktop-only hierarchical navigation
 
 ---
@@ -44,10 +44,11 @@ Internally perform these stages:
 1. analyze the project
 2. detect architecture and project type
 3. detect important flows
-4. detect files and logical code units
-5. plan the teaching structure
-6. generate the final HTML
-7. generate oral exam questions inside the HTML
+4. detect important files
+5. detect logical code units inside files
+6. plan the teaching structure
+7. generate the final HTML
+8. generate oral exam questions inside the HTML
 
 Do NOT output these internal stages as separate files.
 
@@ -119,6 +120,61 @@ Only zoom into specific lines when the internal logic is important enough to req
 
 ---
 
+# Code-Specific Explanation Rule (CRITICAL)
+
+Explanations must be tailored to the actual code.
+
+Do NOT use generic repeated phrases such as:
+- "this is the place where the main logic happens"
+- "before this block the system builds the previous stage"
+- "after this block the routes receive a ready result"
+
+Every block explanation must directly reference:
+- the real purpose of this exact block
+- the exact checks being performed
+- the exact data being queried, built, validated, updated, or returned
+- the exact business meaning of the code
+
+The explanation must feel specific to the code, not templated.
+
+---
+
+# Granularity Rule (CRITICAL)
+
+Do not keep very large units if they contain multiple distinct ideas.
+
+If a section contains several meaningful sub-flows, split it into smaller logical units.
+
+Examples:
+Instead of one large unit like:
+- "user screens"
+
+split into smaller units such as:
+- dashboard data preparation
+- building selected_items
+- checking shortages
+- creating the order record
+- saving order items
+- validating a return
+- calculating missing items
+
+Instead of one large unit like:
+- "admin screens"
+
+split into smaller units such as:
+- approving an order
+- rejecting an order
+- approving a return
+- rejecting a return and creating a block
+- adding inventory items
+- updating inventory items
+- adding teams
+- deleting teams
+
+A logical unit should represent one coherent teaching idea.
+
+---
+
 # Embedded Code Rule (CRITICAL)
 
 Inside the conceptual walkthrough sections, always embed the actual code snippet of the logical unit directly inside the explanation.
@@ -148,6 +204,9 @@ Always explain:
 
 The student must understand the role of the code in the full flow, not only the isolated syntax.
 
+However, keep this context specific to the real code and flow.
+Do not use repetitive template language.
+
 ---
 
 # File Walkthrough Rule
@@ -165,7 +224,7 @@ Explanation and code must stay close together.
 
 ---
 
-# Sidebar Navigation Rule (CRITICAL)
+# Navigation Rule (CRITICAL)
 
 The final HTML must include a desktop sidebar navigation with nested links.
 
@@ -173,6 +232,12 @@ The sidebar must link to:
 - major top-level sections
 - each file section
 - each logical code unit inside each important file
+
+This rule applies not only to the main backend file, but also to:
+- templates
+- CSS files
+- JavaScript files
+- other important source files
 
 Each file and each logical unit must have a unique HTML id anchor.
 
@@ -194,11 +259,11 @@ Optimize for desktop:
 - no need for mobile-first behavior
 - no need to collapse everything into a narrow single-column mobile layout
 
-You may still avoid breaking on medium screens, but the design target is desktop use only.
+You may still avoid breaking badly on medium screens, but the design target is desktop use only.
 
 ---
 
-# Interview Questions Rule
+# Interview Questions Rule (CRITICAL)
 
 The final HTML must include a substantial oral-exam preparation section.
 
@@ -206,14 +271,25 @@ Generate 30-50 open-ended questions.
 
 Do NOT generate:
 - multiple choice questions
+- short trivia questions
 - ready-made answers as the default study mode
 
 Questions should prepare the student for a 1-on-1 oral exam with a teacher.
 
-Each question should preferably include:
+Each question should include:
 - category
 - the question itself
 - points the student should cover
+
+Questions must be distributed across:
+- overview
+- architecture
+- flows
+- file roles
+- code logic
+- debugging
+- design decisions
+- future improvements
 
 ---
 

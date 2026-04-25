@@ -18,6 +18,8 @@ Generate 30-50 questions.
 
 Prefer the higher end when the project is large enough.
 
+Fewer than 30 questions is not acceptable unless the project is extremely tiny.
+
 ---
 
 ## Required Style
@@ -29,6 +31,10 @@ Questions must be:
 - connected to the actual project
 
 Do NOT generate multiple choice questions.
+
+Do NOT generate a tiny short list of example questions.
+
+This must be a real question bank.
 
 ---
 
@@ -48,7 +54,7 @@ Distribute questions across categories such as:
 
 ---
 
-## Recommended Format
+## Required Format
 
 For each question include:
 
@@ -56,16 +62,16 @@ For each question include:
 - question text
 - points to cover
 
-Example structure:
+Use this structure:
 
-### שאלה — זרימה
-תסביר מה קורה כאשר משתמש יוצר הזמנה חדשה.
+### שאלה X — [קטגוריה]
+שאלה:
+...
 
 נקודות לבדיקה:
-- איזה route מופעל
-- אילו בדיקות מתבצעות
-- מתי שומרים למסד
-- מה המשתמש רואה אם יש שגיאה
+- ...
+- ...
+- ...
 
 ---
 

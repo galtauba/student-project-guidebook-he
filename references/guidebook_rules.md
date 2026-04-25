@@ -63,6 +63,52 @@ Each such group must be explained as one full logical idea.
 
 ---
 
+# Avoid Overly Large Blocks
+
+Do not keep giant blocks that contain several different ideas.
+
+If one section contains multiple distinct teaching ideas, split it.
+
+Examples of good splitting:
+- registration field extraction
+- registration validation
+- duplicate username check
+- saving the new user
+- login password verification
+- building selected_items
+- shortage detection
+- inserting the order
+- inserting order items
+- approval shortage loop
+- inventory reduction
+- creating a team action block
+
+This is especially important in large files such as:
+- backend controller files
+- monolithic route files
+- service files with many branches
+
+---
+
+# Code-Specific Explanation Rule
+
+Explanations must be specific to the actual code shown.
+
+Bad explanation:
+- "this is the main logic of the section"
+- "this block processes data"
+- "the system prepares the next step"
+
+Good explanation:
+- "here the system checks whether the username already exists in the users table"
+- "here the loop builds selected_items only for quantities greater than zero"
+- "here shortages are collected instead of failing immediately so all missing items can be shown together"
+- "here the inventory is reduced only after the order is approved"
+
+Every explanation must refer to the actual meaning of the code in front of the student.
+
+---
+
 # When to Drill Down Further
 
 Inside a logical block, go deeper only when necessary.
@@ -98,7 +144,7 @@ What happened before this block, and why the code reaches it.
 Show the actual code snippet for this logical unit.
 
 ## How It Works
-Explain the internal steps clearly.
+Explain the internal steps clearly and specifically.
 
 ## Input
 What data the block depends on.
@@ -126,6 +172,23 @@ The actual code snippet must appear directly in the explanation.
 
 ---
 
+# No Repetitive Template Language
+
+Do not repeat generic explanation patterns across many blocks.
+
+Avoid repeated boilerplate phrases such as:
+- "before this block..."
+- "inside this block..."
+- "after this block..."
+
+unless they are rewritten in a way that is genuinely specific to the exact code.
+
+If many blocks end up sounding the same, the explanations are too generic.
+
+The student must feel that each block was read and understood individually.
+
+---
+
 # Templates and UI Files
 
 For templates and UI-related files, explain:
@@ -136,13 +199,38 @@ For templates and UI-related files, explain:
 - what routes or handlers those actions connect to
 - what the student should notice in the structure
 
+Break important templates into logical units too, such as:
+- page shell
+- navigation
+- flash messages
+- main form
+- result table
+- action buttons
+- conditional sections
+
+Do not reduce templates to one-line summaries.
+
+---
+
+# CSS and Styling Files
+
 For CSS files, explain:
 - what visual role the file has
 - major style sections
 - layout strategy
 - important selectors and why they matter
+- reusable style patterns
+- responsive or desktop layout decisions if relevant
 
-Do not reduce templates/CSS to one-line summaries.
+Break CSS into logical units too, such as:
+- root variables
+- layout containers
+- navigation/sidebar styles
+- cards/tables/forms
+- code blocks
+- desktop layout rules
+
+Do not reduce CSS to one short paragraph.
 
 ---
 
@@ -151,8 +239,8 @@ Do not reduce templates/CSS to one-line summaries.
 These files may be simpler, but still explain them with context.
 
 Do not produce repetitive generic explanations like:
-- “this line is documentation”
-- “this file is used for configuration”
+- "this line is documentation"
+- "this file is used for configuration"
 
 Instead explain the real meaning of the file in this project.
 
@@ -165,6 +253,42 @@ Inside the final HTML:
 - every logical code unit must be a subsection
 - every subsection must be reachable from the sidebar
 - code and explanation must appear together
+
+This rule applies to:
+- backend files
+- templates
+- CSS
+- JavaScript
+- important config files
+
+---
+
+# Sidebar Depth Rule
+
+The sidebar must not stop at file names.
+
+For every important file, include nested navigation links to the logical code units inside that file.
+
+Examples:
+- file: app.py
+  - unit: duplicate username check
+  - unit: password validation
+  - unit: selected_items building
+  - unit: shortage detection
+  - unit: approve order
+  - unit: reject return and create block
+
+- file: templates/login.html
+  - unit: form structure
+  - unit: username input
+  - unit: password input
+  - unit: submit button
+
+- file: static/style.css
+  - unit: root variables
+  - unit: layout shell
+  - unit: sidebar styling
+  - unit: card/table styling
 
 ---
 

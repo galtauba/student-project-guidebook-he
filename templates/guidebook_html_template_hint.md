@@ -30,7 +30,7 @@
     }
 
     .shell {
-      width: min(1600px, calc(100% - 40px));
+      width: min(1700px, calc(100% - 40px));
       margin: 0 auto;
       display: grid;
       grid-template-columns: 340px 1fr;
@@ -166,7 +166,7 @@
       font-size: 0.95rem;
     }
 
-    /* Desktop only target: no mobile-first collapsing */
+    /* Desktop-focused layout only */
   </style>
 </head>
 <body>
@@ -187,9 +187,12 @@
         <a href="#file-app-py">app.py</a>
         <div class="toc-sub">
           <a href="#unit-app-init-db">אתחול וחיבור למסד</a>
-          <a href="#unit-app-user-exists">בדיקת משתמש קיים</a>
+          <a href="#unit-app-duplicate-username-check">בדיקת שם משתמש קיים</a>
           <a href="#unit-app-register-validation">ולידציה של הרשמה</a>
-          <a href="#unit-app-approve-order">אישור הזמנה</a>
+          <a href="#unit-app-build-selected-items">בניית selected_items</a>
+          <a href="#unit-app-shortage-detection">בדיקת חוסרים במלאי</a>
+          <a href="#unit-app-approve-order">אישור הזמנה והפחתת מלאי</a>
+          <a href="#unit-app-reject-return-block">דחיית החזרה ויצירת חסימה</a>
         </div>
       </div>
 
@@ -197,6 +200,18 @@
         <a href="#file-templates-login-html">templates/login.html</a>
         <div class="toc-sub">
           <a href="#unit-login-form-structure">מבנה הטופס</a>
+          <a href="#unit-login-inputs">שדות הקלט</a>
+          <a href="#unit-login-submit">כפתור השליחה</a>
+        </div>
+      </div>
+
+      <div class="toc-file">
+        <a href="#file-static-style-css">static/style.css</a>
+        <div class="toc-sub">
+          <a href="#unit-style-root-vars">משתני root</a>
+          <a href="#unit-style-layout">מבנה layout</a>
+          <a href="#unit-style-sidebar">עיצוב sidebar</a>
+          <a href="#unit-style-cards-tables">כרטיסים וטבלאות</a>
         </div>
       </div>
     </aside>
@@ -228,38 +243,111 @@
 
         <article class="unit-section" id="unit-app-init-db">
           <h3>יחידה רעיונית: אתחול וחיבור למסד</h3>
-
           <div class="context-box">
             <strong>הקשר:</strong>
-            לפני שכל פעולה במערכת יכולה לעבוד, האפליקציה חייבת לדעת איפה מסד הנתונים ואיך לפתוח אליו חיבור.
+            לפני שכל route יוכל לקרוא או לעדכן נתונים, האפליקציה חייבת לדעת איך לפתוח חיבור למסד הנתונים ולסגור אותו נכון.
           </div>
-
-          <p><strong>מה היחידה עושה:</strong> כאן מסבירים את תפקיד הבלוק.</p>
-
+          <p><strong>מה היחידה עושה:</strong> כאן יבוא הסבר ספציפי לקטע.</p>
           <pre class="code-block"><code>def get_db():
-    if "db" not in g:
-        g.db = sqlite3.connect(...)
-    return g.db</code></pre>
-
-          <p><strong>איך זה עובד:</strong> כאן יבוא ההסבר של הקוד עצמו.</p>
-          <p><strong>מה יקרה אם הבלוק יישבר:</strong> כאן יבוא הסבר ההשפעה.</p>
+    ...
+</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר מפורט לקוד עצמו.</p>
         </article>
 
-        <article class="unit-section" id="unit-app-user-exists">
-          <h3>יחידה רעיונית: בדיקת משתמש קיים</h3>
-
+        <article class="unit-section" id="unit-app-duplicate-username-check">
+          <h3>יחידה רעיונית: בדיקת שם משתמש קיים</h3>
           <div class="context-box">
             <strong>הקשר:</strong>
-            במהלך הרשמה, לפני יצירת משתמש חדש, המערכת חייבת לוודא שאין כבר משתמש עם אותו שם.
+            בזמן הרשמה המערכת חייבת לוודא שאין כבר משתמש עם אותו username.
           </div>
-
-          <p><strong>מה היחידה עושה:</strong> בודקת האם שם המשתמש כבר תפוס במסד הנתונים.</p>
-
+          <p><strong>מה היחידה עושה:</strong> בודקת אם כבר קיימת רשומת משתמש עם אותו שם משתמש, ואם כן מוסיפה שגיאה.</p>
           <pre class="code-block"><code>if query_db("SELECT user_id FROM users WHERE username = ?", (username,), one=True):
     errors.append("שם המשתמש כבר קיים במערכת.")</code></pre>
+          <p><strong>איך זה עובד:</strong> השאילתה מחפשת התאמה בטבלת users. אם התקבלה תוצאה, המשמעות היא שהשם כבר תפוס ולכן ההרשמה לא אמורה להמשיך כרגיל.</p>
+        </article>
 
-          <p><strong>איך זה עובד:</strong> השאילתה מחפשת משתמש קיים. אם נמצאה תוצאה, מוסיפים שגיאה ולא ממשיכים ליצירת החשבון.</p>
-          <p><strong>מה יקרה אם הבלוק יישבר:</strong> ייתכן ניסיון ליצור משתמש כפול או קבלת שגיאת מסד.</p>
+        <article class="unit-section" id="unit-app-register-validation">
+          <h3>יחידה רעיונית: ולידציה של הרשמה</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            אחרי קריאת השדות מהטופס, המערכת חייבת לוודא שהנתונים תקינים לפני שמירת משתמש חדש.
+          </div>
+          <pre class="code-block"><code>errors = []
+if not username:
+    errors.append("יש להזין שם משתמש.")
+if not password:
+    errors.append("יש להזין סיסמה.")
+if not full_name:
+    errors.append("יש להזין שם מלא.")
+if role == "user" and not team_id:
+    errors.append("יש לבחור צוות למשתמש רגיל.")</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לולידציה הזאת.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-build-selected-items">
+          <h3>יחידה רעיונית: בניית selected_items</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            בזמן יצירת הזמנה, צריך לבנות רשימה של רק הפריטים שבאמת הוזמנו בכמות חיובית.
+          </div>
+          <pre class="code-block"><code>selected_items = []
+for item in items:
+    qty = parse_positive_int(request.form.get(f"item_{item['item_id']}", "0"))
+    if qty is None:
+        ...
+    if qty > 0:
+        selected_items.append((item, qty))</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי לבניית הרשימה.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-shortage-detection">
+          <h3>יחידה רעיונית: בדיקת חוסרים במלאי</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            אחרי שנבנתה רשימת הפריטים המבוקשים, צריך לבדוק אם יש מספיק מלאי לכל אחד מהם.
+          </div>
+          <pre class="code-block"><code>shortages = []
+for item, qty in selected_items:
+    if qty > item["current_qty"]:
+        shortages.append(
+            f"{item['item_name']} חסר במלאי. ביקשת {qty} ויש רק {item['current_qty']}."
+        )</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי על איסוף כל החוסרים ביחד.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-approve-order">
+          <h3>יחידה רעיונית: אישור הזמנה והפחתת מלאי</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            רק אחרי שמנהל מאשר הזמנה בפועל, המערכת מפחיתה מלאי.
+          </div>
+          <pre class="code-block"><code>for item in items:
+    run_db(
+        "UPDATE inventory_items SET current_qty = current_qty - ? WHERE item_id = ?",
+        (item["requested_qty"], item["item_id"]),
+    )</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי על המשמעות העסקית של ההפחתה.</p>
+        </article>
+
+        <article class="unit-section" id="unit-app-reject-return-block">
+          <h3>יחידה רעיונית: דחיית החזרה ויצירת חסימה</h3>
+          <div class="context-box">
+            <strong>הקשר:</strong>
+            אם יש בעיה בהחזרה, המערכת לא רק דוחה אותה אלא גם חוסמת פעולה עתידית לצוות.
+          </div>
+          <pre class="code-block"><code>run_db(
+    """
+    INSERT INTO team_action_blocks (team_id, action_id, return_id, blocked_by, created_at, reason)
+    VALUES (?, ?, ?, ?, ?, ?)
+    ON CONFLICT(team_id, action_id) DO UPDATE SET
+        return_id = excluded.return_id,
+        blocked_by = excluded.blocked_by,
+        created_at = excluded.created_at,
+        reason = excluded.reason
+    """,
+    (...),
+)</code></pre>
+          <p><strong>איך זה עובד:</strong> כאן יבוא הסבר ספציפי על יצירת או עדכון חסימה לצוות.</p>
         </article>
       </section>
 
@@ -268,20 +356,63 @@
         <p>כאן יבוא הסבר על תפקיד המסך.</p>
 
         <article class="unit-section" id="unit-login-form-structure">
-          <h3>יחידה רעיונית: מבנה טופס ההתחברות</h3>
-
-          <div class="context-box">
-            <strong>הקשר:</strong>
-            זהו המסך שבו המשתמש מכניס את פרטי ההתחברות שלו.
-          </div>
-
+          <h3>יחידה רעיונית: מבנה הטופס</h3>
           <pre class="code-block"><code>&lt;form method="post"&gt;
-  &lt;input name="username"&gt;
-  &lt;input name="password" type="password"&gt;
-  &lt;button type="submit"&gt;התחבר&lt;/button&gt;
+  ...
 &lt;/form&gt;</code></pre>
+          <p>כאן יבוא הסבר על מבנה הטופס.</p>
+        </article>
 
-          <p><strong>איך זה עובד:</strong> הטופס שולח POST ל-route של ההתחברות, והשרת קורא את השדות מהבקשה.</p>
+        <article class="unit-section" id="unit-login-inputs">
+          <h3>יחידה רעיונית: שדות הקלט</h3>
+          <pre class="code-block"><code>&lt;input name="username"&gt;
+&lt;input name="password" type="password"&gt;</code></pre>
+          <p>כאן יבוא הסבר על השדות.</p>
+        </article>
+
+        <article class="unit-section" id="unit-login-submit">
+          <h3>יחידה רעיונית: כפתור השליחה</h3>
+          <pre class="code-block"><code>&lt;button type="submit"&gt;התחבר&lt;/button&gt;</code></pre>
+          <p>כאן יבוא הסבר על פעולת השליחה.</p>
+        </article>
+      </section>
+
+      <section class="section" id="file-static-style-css">
+        <h2>קובץ: static/style.css</h2>
+        <p>כאן יבוא הסבר על תפקיד קובץ העיצוב.</p>
+
+        <article class="unit-section" id="unit-style-root-vars">
+          <h3>יחידה רעיונית: משתני root</h3>
+          <pre class="code-block"><code>:root {
+  --bg: ...;
+  --panel: ...;
+}</code></pre>
+          <p>כאן יבוא הסבר על משתני הצבעים והעיצוב.</p>
+        </article>
+
+        <article class="unit-section" id="unit-style-layout">
+          <h3>יחידה רעיונית: מבנה layout</h3>
+          <pre class="code-block"><code>.wrap {
+  display: grid;
+  grid-template-columns: ...;
+}</code></pre>
+          <p>כאן יבוא הסבר על מבנה העמוד.</p>
+        </article>
+
+        <article class="unit-section" id="unit-style-sidebar">
+          <h3>יחידה רעיונית: עיצוב sidebar</h3>
+          <pre class="code-block"><code>.side {
+  position: sticky;
+  ...
+}</code></pre>
+          <p>כאן יבוא הסבר על הניווט הצדדי.</p>
+        </article>
+
+        <article class="unit-section" id="unit-style-cards-tables">
+          <h3>יחידה רעיונית: כרטיסים וטבלאות</h3>
+          <pre class="code-block"><code>.card { ... }
+table { ... }</code></pre>
+          <p>כאן יבוא הסבר על כרטיסים, טבלאות ורכיבי תוכן.</p>
         </article>
       </section>
 
@@ -289,13 +420,23 @@
         <h2>שאלות לבחינה</h2>
 
         <article class="question">
-          <h3>שאלה — זרימה</h3>
+          <h3>שאלה 1 — זרימה</h3>
           <p>תסביר מה קורה כאשר משתמש נרשם למערכת.</p>
           <ul>
-            <li>אילו שדות נאספים מהטופס</li>
-            <li>אילו בדיקות תקינות מתבצעות</li>
-            <li>איך המידע נשמר</li>
-            <li>למה צריך אישור מנהל</li>
+            <li>אילו שדות נאספים</li>
+            <li>אילו בדיקות מתבצעות</li>
+            <li>איך נשמר המשתמש</li>
+            <li>למה הוא לא יכול להתחבר מיד</li>
+          </ul>
+        </article>
+
+        <article class="question">
+          <h3>שאלה 2 — לוגיקה</h3>
+          <p>למה צריך לבדוק אם שם המשתמש כבר קיים במסד הנתונים?</p>
+          <ul>
+            <li>מה בודק ה-query</li>
+            <li>מה המשמעות העסקית</li>
+            <li>מה יקרה אם נוותר על הבדיקה</li>
           </ul>
         </article>
       </section>
