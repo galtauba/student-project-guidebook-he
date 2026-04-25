@@ -90,6 +90,67 @@ This is especially important in large files such as:
 
 ---
 
+# Route Breakdown Rule
+
+Do not explain a large route as one single unit if it contains several internal stages.
+
+Break routes into their real internal logic.
+
+Examples:
+
+For `register`, use units such as:
+- reading form fields
+- validation
+- duplicate username check
+- insert user
+- success flow
+
+For `login`, use units such as:
+- reading login fields
+- fetching user
+- password verification
+- approval verification
+- session creation
+
+For `new_order`, use units such as:
+- role check
+- blocked team check
+- loading actions/items
+- building selected_items
+- validating quantities
+- shortage detection
+- insert into orders
+- insert into order_items
+
+For `reject_return`, use units such as:
+- reading reject form values
+- validating reason_type
+- validating blocked_action_id
+- loading action and team context
+- restoring returned items to inventory
+- creating/updating team_action_blocks
+- updating return status
+
+If a route still feels large, split again.
+
+---
+
+# Multi-Responsibility Rule
+
+A logical unit should usually have one main responsibility.
+
+If a unit does several of these together, it is probably too large:
+- read input
+- validate input
+- query data
+- decide between several branches
+- write to DB
+- render or redirect
+
+When that happens, split the unit.
+
+---
+
 # No Truncated Code in Units
 
 Every logical unit must show complete real code for that unit.
@@ -122,6 +183,29 @@ Good explanation:
 - "here the inventory is reduced only after the order is approved"
 
 Every explanation must refer to the actual meaning of the code in front of the student.
+
+---
+
+# Deep Explanation Rule
+
+Do not stop at naming the block.
+
+Inside the explanation, clarify:
+- why this block is needed
+- what exact decision it makes
+- what exact query or update happens
+- why the order of operations matters
+- what business consequence follows from success or failure
+
+Example:
+Instead of only saying "this block checks shortages",
+also explain:
+- how the shortages list is built
+- why the system collects all shortage messages together
+- why rejection happens before any DB insert into order_items
+- what the user sees if shortages exist
+
+The student should understand the reasoning, not just the label.
 
 ---
 
@@ -233,6 +317,25 @@ Important templates must not stop at one generic unit if the file has multiple c
 
 ---
 
+# Template Granularity Rule
+
+For templates, do not stop at:
+- "file structure"
+- "form area"
+- "screen content"
+
+if the file clearly has more meaningful parts.
+
+Examples:
+- `base.html` should usually be broken into head, navigation, flash area, content block, footer
+- `login.html` should usually be broken into page shell, form, fields, submit button
+- `register.html` should usually be broken into identity fields, role selector, team selector, submit button
+- `admin_returns.html` should usually be broken into returns table, approve action, reject form, block action selector
+
+The explanation should match what the user actually sees and does on the screen.
+
+---
+
 # CSS and Styling Files
 
 For CSS files, explain:
@@ -255,6 +358,26 @@ Break CSS into logical units too, such as:
 Do not reduce CSS to one short paragraph.
 
 Large CSS files must have several logical units.
+
+---
+
+# CSS Granularity Rule
+
+Large CSS files must be split into real teaching units.
+
+Do not use one generic unit like:
+- "the style file"
+
+Split into meaningful parts such as:
+- color system and variables
+- body and page background
+- container and topbar layout
+- card and grid system
+- forms and buttons
+- status badges and tables
+- responsive or print behavior
+
+Each of these should be navigable from the sidebar when relevant.
 
 ---
 
@@ -342,3 +465,13 @@ Instead do this:
 - explain a logical unit
 - show its code immediately
 - continue to the next logical unit
+
+---
+
+# No Duplicate Source Dump Rule
+
+Do not create a second large “full source” section if the same code has already been shown unit-by-unit in the walkthrough.
+
+The walkthrough is the main source-learning section.
+
+A small appendix or source index is acceptable only if it adds genuine value and does not duplicate the whole learning experience.

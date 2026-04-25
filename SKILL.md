@@ -186,6 +186,81 @@ A logical unit should represent one coherent teaching idea.
 
 ---
 
+# Route Splitting Rule (CRITICAL)
+
+Do NOT keep a full route as one teaching unit if it contains multiple distinct steps.
+
+Large routes must be split into their real internal stages.
+
+Examples:
+
+Instead of one large unit like:
+- `register`
+
+split into:
+- reading form fields
+- basic validation
+- duplicate username check
+- inserting the new user
+- handling success and redirect
+
+Instead of one large unit like:
+- `login`
+
+split into:
+- reading username and password
+- fetching the user from the database
+- password hash verification
+- approval check
+- session creation and redirect
+
+Instead of one large unit like:
+- `new_order`
+
+split into:
+- role and block checks
+- loading actions and inventory
+- building selected_items
+- validating quantities
+- shortage detection
+- inserting the order row
+- inserting order_items rows
+- success redirect
+
+Instead of one large unit like:
+- `reject_return`
+
+split into:
+- validating reason_type
+- validating blocked_action_id
+- loading order/team/action context
+- determining the rejection reason
+- restoring returned items to inventory
+- creating/updating the team_action_blocks record
+- updating the returns status
+
+This rule applies especially to:
+- Flask routes
+- controller actions
+- request handlers
+- large functions with several DB operations
+
+---
+
+# Multi-Decision Rule (CRITICAL)
+
+If a unit contains:
+- more than one major conditional branch
+- more than one loop with different purposes
+- more than one distinct database write
+- more than one business decision
+
+then the unit is probably too large and must be split again.
+
+Do not keep large mixed-purpose blocks just because they are inside one function.
+
+---
+
 # Code-Specific Explanation Rule (CRITICAL)
 
 Explanations must be tailored to the actual code.
@@ -202,6 +277,24 @@ Every block explanation must directly reference:
 - the exact business meaning of the code
 
 The explanation must feel specific to the code, not templated.
+
+---
+
+# Deep Explanation Rule (CRITICAL)
+
+Inside each logical unit, explain more than the headline.
+
+You must explain:
+- why this code exists
+- what exact condition or rule it enforces
+- what data it reads
+- what data it writes or changes
+- why the developer chose this sequence
+- what would happen if this code failed or was removed
+- what next step depends on it
+
+Do not stop at "what this block does".
+Also explain the reasoning and consequences inside the flow.
 
 ---
 
@@ -273,6 +366,47 @@ This rule applies especially to:
 
 ---
 
+# Template and CSS Depth Rule (CRITICAL)
+
+Do not stop at a single generic subsection for templates or CSS files when they clearly contain several meaningful parts.
+
+Examples:
+
+`templates/base.html` should usually be split into:
+- head and CSS include
+- top navigation
+- flash messages
+- content block
+- footer
+
+`templates/login.html` should usually be split into:
+- outer card or page shell
+- form tag
+- username field
+- password field
+- submit button
+
+`templates/new_order.html` should usually be split into:
+- action selector
+- blocked actions warning area
+- items table
+- quantity inputs
+- submit button
+
+`static/style.css` should usually be split into:
+- root variables
+- base/body styles
+- layout shell
+- topbar/nav
+- cards and grids
+- forms and buttons
+- status pills / tables / lists
+- responsive or desktop adjustments
+
+If the file has several clear parts, the sidebar and the explanation must reflect those parts.
+
+---
+
 # Navigation Rule (CRITICAL)
 
 The final HTML must include a desktop sidebar navigation with nested links.
@@ -296,6 +430,26 @@ The user must be able to quickly jump to:
 
 ---
 
+# Sidebar Depth Rule (CRITICAL)
+
+The sidebar must not stop at file names.
+
+For every important file, include nested navigation links to the logical units inside that file.
+
+This means:
+- backend files need block-level navigation
+- templates need block-level navigation
+- CSS files need block-level navigation
+- shared layout files need block-level navigation
+- larger config or documentation files may also need block-level navigation if they contain multiple meaningful sections
+
+Do not use one generic nested item like:
+- "file structure and its relation to flow"
+
+when the file clearly contains several real teaching units.
+
+---
+
 # Desktop-Only Layout Rule (CRITICAL)
 
 The final HTML is intended for desktop screens only.
@@ -309,6 +463,26 @@ Optimize for desktop:
 - no need to collapse everything into a narrow single-column mobile layout
 
 You may still avoid breaking badly on medium screens, but the design target is desktop use only.
+
+---
+
+# No Separate Full Source Section Rule (CRITICAL)
+
+Do NOT create a large separate section that dumps the full source code again after the walkthrough.
+
+The walkthrough itself must already contain the real code, unit by unit.
+
+A short appendix or source index is acceptable if truly useful, but it must not duplicate the main educational content.
+
+The main learning experience must be:
+- explanation
+- code
+- explanation
+- next code unit
+
+not:
+- explanation section
+- then later a giant repeated source dump
 
 ---
 
