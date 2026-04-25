@@ -18,6 +18,13 @@ The final HTML must include:
 - oral exam preparation questions
 - desktop-only hierarchical navigation
 
+The teaching tone must feel like:
+- a private tutor
+- a patient classroom explanation
+- a step-by-step guided lesson for a student who still does not fully understand the project
+
+The final result must read like a full teaching guide, not like raw technical documentation.
+
 ---
 
 # Final Output Rule (CRITICAL)
@@ -34,6 +41,8 @@ Do NOT generate:
 - any additional deliverables
 
 All analysis must be internal and all final content must be embedded into the single HTML file.
+
+Do not output helper notes, implementation notes, source coverage notes, or “extra study material” as separate files.
 
 ---
 
@@ -52,6 +61,13 @@ Internally perform these stages:
 9. generate oral exam questions inside the HTML
 
 Do NOT output these internal stages as separate files.
+
+During the internal analysis, aggressively detect places where:
+- one route contains several independent responsibilities
+- one function mixes validation, DB access, decision logic, and output
+- one template contains several visible screen areas
+- one CSS file contains several visual systems
+- code is at risk of being repeated later in the HTML
 
 ---
 
@@ -75,6 +91,10 @@ Possible project types include:
 
 The explanation style must adapt accordingly.
 
+If the project is educationally complex, slow the explanation down and explain more context.
+If the project is small, keep the structure complete but scaled appropriately.
+If the project is large, increase teaching depth and split more aggressively into smaller logical units.
+
 ---
 
 # Full Source Rule (CRITICAL)
@@ -93,6 +113,8 @@ Do not replace source code with summaries.
 
 Do not omit source files unless they are clearly generated artifacts, binaries, or irrelevant external dependency files.
 
+The source must be included through the walkthrough itself, unit by unit, inside the teaching structure.
+
 ---
 
 # No Truncated Code Rule (CRITICAL)
@@ -107,6 +129,30 @@ Every logical unit must show the real code of that unit in a complete and honest
 
 If a logical unit is too large, split it into smaller logical units.
 Do not hide part of the code.
+
+Do not solve size problems by:
+- replacing inner code with comments like “rest of logic continues here”
+- showing only the beginning and end of a block
+- collapsing real code into abstract pseudo-steps
+
+---
+
+# No Duplicate Code Rule (CRITICAL)
+
+Do NOT repeat the same code in multiple places unless a tiny repeated reminder is truly necessary for understanding and is clearly a small excerpt.
+
+Completely forbid:
+- duplicate code blocks
+- repeated file dumps
+- a second “full source code” presentation after the walkthrough
+- appendix sections that re-show the same code already taught earlier
+- `<details class="full-source">`
+- any “open full file source” expandable block
+- any “complete file below” block after the logical explanation already covered that file
+
+The learning experience must show each real code segment once, in its natural teaching unit.
+
+If the same file has already been explained unit by unit, do not dump it again later in full.
 
 ---
 
@@ -132,6 +178,9 @@ Examples of logical code units:
 Each logical block must be explained as a complete unit.
 
 Only zoom into specific lines when the internal logic is important enough to require it.
+
+Do not let one teaching unit become a mini-file dump.
+A unit must stay focused on one coherent idea.
 
 ---
 
@@ -183,6 +232,14 @@ split into smaller units such as:
 - conditional warning area
 
 A logical unit should represent one coherent teaching idea.
+
+Use aggressive splitting when a block contains:
+- multiple conditions
+- a loop plus business decision logic
+- a query phase and a write phase
+- validation and redirect/render behavior together
+- several database operations with different meanings
+- preparation, decision, and persistence in one continuous route
 
 ---
 
@@ -245,6 +302,8 @@ This rule applies especially to:
 - request handlers
 - large functions with several DB operations
 
+It also applies to non-route functions whenever they clearly contain several independent teaching steps.
+
 ---
 
 # Multi-Decision Rule (CRITICAL)
@@ -258,6 +317,9 @@ If a unit contains:
 then the unit is probably too large and must be split again.
 
 Do not keep large mixed-purpose blocks just because they are inside one function.
+
+If a block both decides and mutates state, consider whether those should be separate teaching units.
+If a block loads data, validates it, and then writes data, it is usually too large as one unit.
 
 ---
 
@@ -278,6 +340,10 @@ Every block explanation must directly reference:
 
 The explanation must feel specific to the code, not templated.
 
+Do not write like API documentation.
+Do not write like generated reference notes.
+Do not write like source listing metadata.
+
 ---
 
 # Deep Explanation Rule (CRITICAL)
@@ -295,6 +361,21 @@ You must explain:
 
 Do not stop at "what this block does".
 Also explain the reasoning and consequences inside the flow.
+
+If the unit contains validation, explain:
+- what invalid input means here
+- why the validation appears before later steps
+- what failure path the user sees
+
+If the unit contains DB access, explain:
+- what table or record is involved
+- why it is read or updated now
+- what later logic depends on that read/write
+
+If the unit contains control flow, explain:
+- why the order matters
+- what branch causes redirect, render, flash, abort, or state change
+- what the system prevents by making that decision here
 
 ---
 
@@ -315,6 +396,8 @@ The student must see:
 
 The code and the explanation must appear together in the same place.
 
+The unit must not rely on a separate hidden full-file section elsewhere.
+
 ---
 
 # Context Rule (CRITICAL)
@@ -330,6 +413,37 @@ The student must understand the role of the code in the full flow, not only the 
 However, keep this context specific to the real code and flow.
 Do not use repetitive template language.
 
+The context should feel like a teacher saying:
+- where we are in the flow
+- why we reached this code now
+- what later step depends on it
+
+---
+
+# Strict Unit Structure Rule (CRITICAL)
+
+Each logical unit must follow this pedagogical structure in the final HTML:
+
+1. Title
+2. Context
+3. Goal
+4. Real Code
+5. Deep Explanation
+6. What Happens Next
+
+These parts may be styled visually in HTML, but all six ideas must be present.
+
+Do not skip “Goal” just because the title exists.
+Do not skip “What Happens Next” just because the next section follows visually.
+Do not merge everything into one generic paragraph.
+
+The student must be able to clearly identify:
+- what stage of the flow this is
+- what the unit is trying to do
+- the exact code
+- why it works this way
+- how it hands off to the next unit
+
 ---
 
 # File Walkthrough Rule
@@ -344,6 +458,9 @@ For every important file:
 Do not keep all explanation in one place and all code in another place.
 
 Explanation and code must stay close together.
+
+Do not turn the file walkthrough into documentation metadata.
+It must read as a teaching progression.
 
 ---
 
@@ -363,6 +480,9 @@ This rule applies especially to:
 - shared templates such as base.html
 - complex form templates
 - large CSS files
+
+If a file still feels shallow after first splitting, split further.
+Do not settle for file-level summary when real internal structure exists.
 
 ---
 
@@ -404,6 +524,13 @@ Examples:
 - responsive or desktop adjustments
 
 If the file has several clear parts, the sidebar and the explanation must reflect those parts.
+
+This same depth rule applies to:
+- shared layout templates
+- complex admin screens
+- JavaScript UI files
+- reusable partial templates
+- large style systems
 
 ---
 
@@ -448,6 +575,15 @@ Do not use one generic nested item like:
 
 when the file clearly contains several real teaching units.
 
+The sidebar depth rule applies equally to:
+- templates
+- CSS
+- JavaScript
+- config files with meaningful sections
+- README files when they are important for understanding the project
+
+Sidebar navigation must reflect the real teaching depth of the page.
+
 ---
 
 # Desktop-Only Layout Rule (CRITICAL)
@@ -484,6 +620,31 @@ not:
 - explanation section
 - then later a giant repeated source dump
 
+Do not create:
+- “complete source below”
+- “full file listing”
+- “open full code”
+- “appendix: all files again”
+- duplicated “reference source” sections
+
+---
+
+# No Documentation-Style Output Rule (CRITICAL)
+
+Do not write the guide as technical documentation.
+
+Completely avoid documentation-style output such as:
+- file/line metadata as the main teaching device
+- phrases like "source: app.py:1-44"
+- raw line-range references as headings
+- dry catalog-style wording
+- generic reference-manual phrasing
+
+The guide must explain logic, sequence, and meaning.
+It must sound like instruction for a student, not repository documentation.
+
+Optional metadata may exist quietly if truly useful, but it must never dominate the teaching structure or replace real explanation.
+
 ---
 
 # Interview Questions Rule (CRITICAL)
@@ -514,6 +675,14 @@ Questions must be distributed across:
 - design decisions
 - future improvements
 
+Do not generate fewer than 30 questions unless the project is extremely tiny and that limit becomes impossible.
+Prefer strong coverage across the project.
+
+Do not include ready answers.
+Do not include answer keys.
+Do not convert them into quiz format.
+Focus on what the student should explain in their own words.
+
 ---
 
 # HTML Must Include
@@ -529,6 +698,8 @@ The final HTML must include, in a clear structure:
 7. oral exam preparation questions
 8. final summary
 
+The file walkthrough and logical code-unit walkthrough must function as one integrated teaching experience, not two separate duplicated sections.
+
 ---
 
 # Writing Style
@@ -537,3 +708,7 @@ Write in Hebrew.
 Write clearly and pedagogically.
 Assume the student may not fully understand the code yet.
 Prefer teaching clarity over brevity.
+
+Write as if a private tutor is guiding the student step by step through the project.
+Prefer teaching logic and cause-and-effect over terse reference-style wording.
+Do not sound robotic, catalog-like, or documentation-first.
