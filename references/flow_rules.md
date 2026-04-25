@@ -1,9 +1,8 @@
 # Flow Detection Rules
 
-Identify flows dynamically.
+Detect flows dynamically.
 
 Examples:
-
 - user interaction
 - API request
 - CLI command
@@ -12,7 +11,7 @@ Examples:
 
 ---
 
-## For each flow:
+For each flow identify:
 
 1. entry point
 2. steps
@@ -22,6 +21,4 @@ Examples:
 
 ---
 
-## Output
-
-flow_map.md
+Explain flows in human-readable way.

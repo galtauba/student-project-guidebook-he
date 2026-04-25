@@ -1,49 +1,74 @@
 <!DOCTYPE html>
-<html lang="he">
+<html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <title>ספר הדרכה לפרויקט</title>
+
 <style>
-body { font-family: Arial; line-height: 1.6; direction: rtl; }
-code, pre { background: #f4f4f4; padding: 10px; display: block; direction: ltr; }
-h2, h3 { border-bottom: 1px solid #ccc; }
+body { font-family: Arial; line-height: 1.7; direction: rtl; background: #f8f6f2; }
+section { margin-bottom: 30px; }
+pre { background: #111; color: #eee; padding: 15px; border-radius: 10px; direction: ltr; }
+.line { background: #fff3cd; padding: 10px; margin-bottom: 10px; border-radius: 8px; }
 </style>
+
 </head>
 
 <body>
 
-<h1>ספר הדרכה לפרויקט</h1>
+<h1>ספר הדרכה מלא לפרויקט</h1>
 
-<h2>סקירה כללית</h2>
+<h2>מבוא</h2>
 
 <h2>ארכיטקטורה</h2>
 
-<h2>זרימות מרכזיות</h2>
+<h2>זרימות מערכת</h2>
 
-<h2>פירוק קבצים וקוד מלא</h2>
+<h2>פירוק קוד מלא</h2>
 
 <section>
+
 <h3>קובץ: example.py</h3>
 
 <h4>תפקיד הקובץ</h4>
 <p>...</p>
 
-<h4>בלוק: Imports</h4>
-<p>הסבר...</p>
+<h4>הסבר קוד</h4>
 
-<pre><code>
-import os
-</code></pre>
+<div class="line">
+<p><strong>קוד:</strong></p>
+<pre><code>import os</code></pre>
 
-<h4>בלוק: Logic</h4>
-<p>הסבר...</p>
+<p><strong>הסבר:</strong>
+ייבוא ספרייה לעבודה עם מערכת הקבצים.
+</p>
+</div>
 
-<pre><code>
-def run():
-    pass
-</code></pre>
+<div class="line">
+<pre><code>def run():</code></pre>
+<p>הגדרת פונקציה ראשית...</p>
+</div>
+
+<div class="line">
+<pre><code>    print("hello")</code></pre>
+<p>הדפסה למסך...</p>
+</div>
 
 </section>
+
+<h2>שאלות הכנה לראיון</h2>
+
+<section>
+
+<h3>שאלה 1 — Flow</h3>
+<p>תסביר מה קורה כאשר...</p>
+<ul>
+<li>...</li>
+<li>...</li>
+</ul>
+
+</section>
+
+<h2>סיכום</h2>
 
 </body>
 </html>

@@ -1,32 +1,28 @@
 # Project Analysis Rules
 
-## Detect Project Type
+Detect automatically:
 
-- Web App
-- Backend
+## Project Type
+- Web
 - CLI
+- API
 - Game
 - Library
 - Script
-- Microservices
-- Monolithic
-- Layered
 
 ---
 
-## Detect Structure
-
-- single file
+## Structure
+- monolithic
 - multi-file
-- modular
 - layered
+- modular
 
 ---
 
-## Detect Components
-
-- UI / frontend
-- backend logic
+## Components
+- UI
+- backend
 - database
 - APIs
 - config
@@ -34,24 +30,21 @@
 
 ---
 
-## Detect Technologies
-
+## Technologies
 - language
 - framework
-- database
-- external services
+- DB
 
 ---
 
-## Identify
-
+## Identify:
 - entry points
 - core logic
 - data flow
 
 ---
 
-## Split Files into Blocks
+## Split Code Into Logical Segments
 
 - imports
 - config
@@ -59,12 +52,6 @@
 - input handling
 - validation
 - logic
-- data
+- data access
 - output
 - error handling
-
----
-
-## Output
-
-project_analysis.md

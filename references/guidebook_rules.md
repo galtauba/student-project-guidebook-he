@@ -4,90 +4,89 @@ Write in Hebrew.
 
 ---
 
-# Structure
+# 🎯 Teaching Mode (CRITICAL)
 
-1. Overview
-2. Architecture
-3. Flows
-4. Files
-5. Full Code Walkthrough
+The guide must feel like a private lesson.
+
+Explain code progressively and clearly.
 
 ---
 
-# FULL CODE REQUIREMENT (CRITICAL)
+# 📦 FULL CODE REQUIREMENT
 
-The HTML must include ALL project code.
+Include ALL project files with full code.
+
+DO NOT omit any file.
 
 ---
 
-# For Each File
+# 📂 For Each File
 
 Include:
 
 - file name
 - purpose
-- structure
-- full code (split into blocks)
-- explanation per block
-- function explanations
-- flow connections
+- explanation
+- FULL code
+- line-by-line explanation
 
 ---
 
-# Block Template
+# 🔬 Line-by-Line Explanation
 
-### בלוק: [שם]
+For code:
 
-הסבר:
-- מה זה
-- למה קיים
-- איך עובד
-- קלט / פלט
-- מה יקרה אם נשבר
-- איך מתחבר
-
-```code
-CODE HERE
-````
+- break into small segments (1–5 lines)
+- for critical logic → explain each line separately
 
 ---
 
-# Function Explanation
+# Explanation for each segment must include:
 
-* תפקיד
-* לוגיקה
-* קלט
-* פלט
-* תלות
-
----
-
-# Flow Explanation
-
-Explain step-by-step execution.
+- what it does
+- why it exists
+- what happens if removed
+- how it connects forward
 
 ---
 
-# Templates
+# 🧠 Important Logic
+
+Always deeply explain:
+
+- conditions
+- loops
+- validations
+- DB operations
+- state changes
+- API calls
+
+---
+
+# 🔗 Flow Explanation
+
+Explain how code connects across:
+
+- functions
+- files
+- modules
+
+---
+
+# 🎨 Templates (HTML files)
 
 Explain:
 
-* data input
-* UI
-* actions
+- UI structure
+- data variables
+- forms
+- user actions
+- connected routes
 
 ---
 
-# Style
+# ❗ CRITICAL RULES
 
-* Hebrew
-* clear
-* student-friendly
-* very detailed
-
----
-
-# CRITICAL
-
-Never show code without explanation.
-Never explain without showing code.
+- NEVER show code without explanation
+- NEVER explain without showing code
+- NEVER skip lines of important logic

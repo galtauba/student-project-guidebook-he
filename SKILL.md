@@ -1,95 +1,104 @@
 ---
 name: student-project-guidebook-he
-description: Generate a complete Hebrew guidebook for any software project, including full source code, deep explanations, flow analysis, and oral exam preparation questions.
+description: Generate a single complete Hebrew HTML guidebook for any software project, including full source code and line-by-line explanations for teaching and oral exam preparation.
 ---
 
 # 🎯 Core Goal
 
-Transform ANY software project into:
+Transform ANY software project into ONE complete HTML guidebook.
 
-1. Full HTML guidebook (with ALL code embedded)
-2. Deep explanation of every part
-3. Flow and execution understanding
-4. Oral exam preparation questions
-5. Coverage validation
-
----
-
-# 🔥 Execution Pipeline (MANDATORY)
-
-Follow strictly:
-
-## Step 1 — Project Analysis
-Use references/analysis_rules.md  
-Output: project_analysis.md
-
-## Step 2 — Flow Detection
-Use references/flow_rules.md  
-Output: flow_map.md
-
-## Step 3 — Structure Planning
-Create guidebook_plan.md
-
-## Step 4 — Guidebook Writing (FULL CODE REQUIRED)
-Use references/guidebook_rules.md  
-Output: student_guidebook.html
-
-## Step 5 — Question Generation
-Use references/question_rules.md  
-Output: interview_questions.md
-
-## Step 6 — Coverage Report
-Use references/coverage_rules.md  
-Output: coverage_report.md
+The HTML must include:
+- full explanation
+- full source code
+- line-by-line teaching
+- architecture
+- flows
+- oral exam questions
 
 ---
 
-# ⚠️ Critical Rules
+# 🔥 Internal Pipeline (DO NOT OUTPUT FILES)
 
-- NEVER skip steps
-- NEVER assume project type
-- ALWAYS detect structure first
-- ALWAYS include FULL code in HTML
-- ALWAYS explain code blocks
+Internally perform:
+
+1. project analysis
+2. architecture detection
+3. flow detection
+4. explanation planning
+5. full HTML generation
+6. question generation
+
+DO NOT output intermediate files.
+
+---
+
+# ❗ Final Output Rule (CRITICAL)
+
+You must output ONLY ONE file:
+
+- student_guidebook.html
+
+Do NOT generate:
+- markdown files
+- analysis files
+- separate question files
+
+Everything must be inside the HTML.
 
 ---
 
 # 🧠 Universal Adaptation Rule
 
-Detect project type and adapt:
+Detect project type dynamically:
 
-- Web → UI + backend + interaction
-- CLI → commands + execution flow
-- API → request/response flow
-- Game → loop + events
-- Library → API usage
-- Script → execution steps
+- Web
+- CLI
+- API
+- Game
+- Library
+- Script
 
----
-
-# 🔥 Full Source Rule (CRITICAL)
-
-The final HTML MUST contain:
-
-- all project code files
-- full source code
-- broken into logical blocks
-- explanation for each block
-
-The student must be able to learn ONLY from the HTML.
+Adapt explanation accordingly.
 
 ---
 
-# 🔗 Flow Requirement
+# 🔥 FULL CODE RULE (CRITICAL)
 
-Always explain:
+The HTML must contain:
+
+- ALL project files
+- ALL code
+- NO summaries instead of code
+- NO missing files
+
+---
+
+# 🔬 LINE-BY-LINE RULE (CRITICAL)
+
+Explain code like a private teacher:
+
+- explain every important line
+- break code into very small segments
+- explain meaning of each line
+- explain why it exists
+- explain effect on system
+
+---
+
+# 🔗 FLOW RULE
+
+Explain execution flow:
 
 input → processing → logic → data → output
 
 ---
 
-# 🎯 Outputs
+# 🎯 HTML MUST INCLUDE
 
-1. student_guidebook.html  
-2. interview_questions.md  
-3. coverage_report.md  
+1. Overview
+2. Architecture
+3. Flows
+4. Full code walkthrough (ALL files)
+5. Line-by-line explanations
+6. Interview questions
+7. Summary
